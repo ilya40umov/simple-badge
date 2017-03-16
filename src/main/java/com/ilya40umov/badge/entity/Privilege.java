@@ -1,7 +1,7 @@
 package com.ilya40umov.badge.entity;
 
 /**
- * Represents a right to execute certain kind of operations.
+ * Represents a permission for a user to execute certain types of operations.
  *
  * @author isorokoumov
  */

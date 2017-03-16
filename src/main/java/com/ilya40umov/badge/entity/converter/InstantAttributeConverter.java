@@ -12,11 +12,11 @@ import java.time.Instant;
  * @author isorokoumov
  */
 @Converter(autoApply = true)
-public class InstantAttibuteConverter implements AttributeConverter<Instant, Timestamp> {
+public class InstantAttributeConverter implements AttributeConverter<Instant, Timestamp> {
 
     @Override
     public Timestamp convertToDatabaseColumn(Instant attribute) {
-        return attribute != null ? new Timestamp(attribute.toEpochMilli()) : null;
+        return attribute != null ? Timestamp.from(attribute) : null;
     }
 
     @Override

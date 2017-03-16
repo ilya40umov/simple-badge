@@ -12,7 +12,7 @@ import javax.persistence.Converter;
  * @author isorokoumov
  */
 @Converter(autoApply = true)
-public class PrivilegeAttibuteConverter implements AttributeConverter<Privilege, Integer> {
+public class PrivilegeAttributeConverter implements AttributeConverter<Privilege, Integer> {
 
     @Override
     public Integer convertToDatabaseColumn(Privilege attribute) {
