@@ -26,8 +26,9 @@ public class AccountPrivilege {
         return accountPrivilegeId;
     }
 
-    public void setAccountPrivilegeId(AccountPrivilegeId accountPrivilegeId) {
+    public AccountPrivilege setAccountPrivilegeId(AccountPrivilegeId accountPrivilegeId) {
         this.accountPrivilegeId = accountPrivilegeId;
+        return this;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -37,8 +38,9 @@ public class AccountPrivilege {
         return account;
     }
 
-    public void setAccount(Account account) {
+    public AccountPrivilege setAccount(Account account) {
         this.account = account;
+        return this;
     }
 
     @Override

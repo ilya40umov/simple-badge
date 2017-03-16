@@ -38,8 +38,9 @@ public class Account {
         return accountId;
     }
 
-    public void setAccountId(Long accountId) {
+    public Account setAccountId(Long accountId) {
         this.accountId = accountId;
+        return this;
     }
 
     @Column(name = "email", length = 256, nullable = false)
@@ -47,8 +48,9 @@ public class Account {
         return email;
     }
 
-    public void setEmail(String email) {
+    public Account setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     @Column(name = "password", length = 64, nullable = false)
@@ -56,8 +58,9 @@ public class Account {
         return password;
     }
 
-    public void setPassword(String password) {
+    public Account setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     @Column(name = "first_name", length = 64, nullable = false)
@@ -65,8 +68,9 @@ public class Account {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public Account setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
     @Column(name = "last_name", length = 64, nullable = false)
@@ -74,8 +78,9 @@ public class Account {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public Account setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     @CreatedDate
@@ -84,8 +89,9 @@ public class Account {
         return created;
     }
 
-    public void setCreated(Instant created) {
+    public Account setCreated(Instant created) {
         this.created = created;
+        return this;
     }
 
     @LastModifiedDate
@@ -94,8 +100,9 @@ public class Account {
         return modified;
     }
 
-    public void setModified(Instant modified) {
+    public Account setModified(Instant modified) {
         this.modified = modified;
+        return this;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", orphanRemoval = true,
@@ -104,8 +111,9 @@ public class Account {
         return accountPrivileges;
     }
 
-    public void setAccountPrivileges(Set<AccountPrivilege> accountPrivileges) {
+    public Account setAccountPrivileges(Set<AccountPrivilege> accountPrivileges) {
         this.accountPrivileges = accountPrivileges;
+        return this;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", orphanRemoval = true)
@@ -113,8 +121,9 @@ public class Account {
         return accountBadges;
     }
 
-    public void setAccountBadges(Set<AccountBadge> accountBadges) {
+    public Account setAccountBadges(Set<AccountBadge> accountBadges) {
         this.accountBadges = accountBadges;
+        return this;
     }
 
     @Override

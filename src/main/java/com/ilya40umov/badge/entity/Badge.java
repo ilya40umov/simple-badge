@@ -38,8 +38,9 @@ public class Badge {
         return badgeId;
     }
 
-    public void setBadgeId(Long badgeId) {
+    public Badge setBadgeId(Long badgeId) {
         this.badgeId = badgeId;
+        return this;
     }
 
     @Column(name = "title", length = 64, nullable = false)
@@ -47,8 +48,9 @@ public class Badge {
         return title;
     }
 
-    public void setTitle(String title) {
+    public Badge setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     @Column(name = "description", length = 512, nullable = false)
@@ -56,8 +58,9 @@ public class Badge {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Badge setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     @Lob
@@ -67,8 +70,9 @@ public class Badge {
         return thumbnailImage;
     }
 
-    public void setThumbnailImage(Blob thumbnailImage) {
+    public Badge setThumbnailImage(Blob thumbnailImage) {
         this.thumbnailImage = thumbnailImage;
+        return this;
     }
 
     @Lob
@@ -78,8 +82,9 @@ public class Badge {
         return fullImage;
     }
 
-    public void setFullImage(Blob fullImage) {
+    public Badge setFullImage(Blob fullImage) {
         this.fullImage = fullImage;
+        return this;
     }
 
     @CreatedDate
@@ -88,8 +93,9 @@ public class Badge {
         return created;
     }
 
-    public void setCreated(Instant created) {
+    public Badge setCreated(Instant created) {
         this.created = created;
+        return this;
     }
 
     @LastModifiedDate
@@ -98,8 +104,9 @@ public class Badge {
         return modified;
     }
 
-    public void setModified(Instant modified) {
+    public Badge setModified(Instant modified) {
         this.modified = modified;
+        return this;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -109,8 +116,9 @@ public class Badge {
         return owner;
     }
 
-    public void setOwner(Account owner) {
+    public Badge setOwner(Account owner) {
         this.owner = owner;
+        return this;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "badge", orphanRemoval = true)
@@ -118,8 +126,9 @@ public class Badge {
         return accountBadges;
     }
 
-    public void setAccountBadges(Set<AccountBadge> accountBadges) {
+    public Badge setAccountBadges(Set<AccountBadge> accountBadges) {
         this.accountBadges = accountBadges;
+        return this;
     }
 
     @Override

@@ -18,16 +18,18 @@ public class AccountPrivilegeId implements Serializable {
         return privilege;
     }
 
-    public void setPrivilege(Privilege privilege) {
+    public AccountPrivilegeId setPrivilege(Privilege privilege) {
         this.privilege = privilege;
+        return this;
     }
 
     public Long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Long accountId) {
+    public AccountPrivilegeId setAccountId(Long accountId) {
         this.accountId = accountId;
+        return this;
     }
 
     @Override

@@ -32,8 +32,9 @@ public class AccountBadge {
         return accountBadgeId;
     }
 
-    public void setAccountBadgeId(Long accountBadgeId) {
+    public AccountBadge setAccountBadgeId(Long accountBadgeId) {
         this.accountBadgeId = accountBadgeId;
+        return this;
     }
 
     @Column(name = "comment", length = 512)
@@ -41,8 +42,9 @@ public class AccountBadge {
         return comment;
     }
 
-    public void setComment(String comment) {
+    public AccountBadge setComment(String comment) {
         this.comment = comment;
+        return this;
     }
 
     @CreatedDate
@@ -51,8 +53,9 @@ public class AccountBadge {
         return created;
     }
 
-    public void setCreated(Instant created) {
+    public AccountBadge setCreated(Instant created) {
         this.created = created;
+        return this;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -62,8 +65,9 @@ public class AccountBadge {
         return account;
     }
 
-    public void setAccount(Account account) {
+    public AccountBadge setAccount(Account account) {
         this.account = account;
+        return this;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -73,8 +77,9 @@ public class AccountBadge {
         return badge;
     }
 
-    public void setBadge(Badge badge) {
+    public AccountBadge setBadge(Badge badge) {
         this.badge = badge;
+        return this;
     }
 
     @Override
