@@ -2,6 +2,7 @@ package com.ilya40umov.badge.entity;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Blob;
@@ -14,6 +15,7 @@ import java.util.Set;
  * @author isorokoumov
  */
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "badge",
         indexes = {@Index(name = "badge_by_title", columnList = "title", unique = true)})
 public class Badge {

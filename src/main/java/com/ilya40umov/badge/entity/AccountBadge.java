@@ -1,6 +1,7 @@
 package com.ilya40umov.badge.entity;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -11,6 +12,7 @@ import java.time.Instant;
  * @author isorokoumov
  */
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "account_badge",
         indexes = {@Index(name = "account_badge_by_account_id_badge_id",
                 columnList = "account_id, badge_id", unique = true)})

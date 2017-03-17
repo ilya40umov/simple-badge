@@ -2,6 +2,7 @@ package com.ilya40umov.badge.entity;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -14,8 +15,15 @@ import java.util.Set;
  * @author isorokoumov
  */
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "account",
         indexes = {@Index(name = "account_by_email", columnList = "email", unique = true)})
+@NamedEntityGraphs({
+        @NamedEntityGraph(name = "Account.withAllJoins", includeAllAttributes = true),
+        @NamedEntityGraph(name = "Account.withPrivileges", attributeNodes = {
+                @NamedAttributeNode("accountPrivileges")
+        })
+})
 public class Account {
 
     private Long accountId;
@@ -106,13 +114,19 @@ public class Account {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", orphanRemoval = true,
-            cascade = CascadeType.ALL)
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     public Set<AccountPrivilege> getAccountPrivileges() {
         return accountPrivileges;
     }
 
     public Account setAccountPrivileges(Set<AccountPrivilege> accountPrivileges) {
         this.accountPrivileges = accountPrivileges;
+        return this;
+    }
+
+    public Account addAccountPrivilege(AccountPrivilege accountPrivilege) {
+        accountPrivilege.setAccount(this);
+        getAccountPrivileges().add(accountPrivilege);
         return this;
     }
 

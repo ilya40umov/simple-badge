@@ -14,13 +14,15 @@ public class AccountPrivilege {
     private AccountPrivilegeId accountPrivilegeId;
     private Account account;
 
+    public static AccountPrivilege fromPrivilege(Privilege privilege) {
+        return new AccountPrivilege()
+                .setAccountPrivilegeId(new AccountPrivilegeId().setPrivilege(privilege));
+    }
+
     @EmbeddedId
     @AttributeOverrides({
             @AttributeOverride(name = "privilege",
-                    column = @Column(name = "privilege_id", nullable = false)),
-            @AttributeOverride(name = "accountId",
-                    column = @Column(name = "account_id", nullable = false))
-
+                    column = @Column(name = "privilege_id", nullable = false))
     })
     public AccountPrivilegeId getAccountPrivilegeId() {
         return accountPrivilegeId;
@@ -32,7 +34,8 @@ public class AccountPrivilege {
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "account_id", nullable = false, insertable = false, updatable = false,
+    @MapsId("accountId")
+    @JoinColumn(name = "account_id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_account_privilege_account_id"))
     public Account getAccount() {
         return account;
