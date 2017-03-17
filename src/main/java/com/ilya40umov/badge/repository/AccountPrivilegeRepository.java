@@ -21,4 +21,7 @@ public interface AccountPrivilegeRepository
     boolean doesAccountHavePrivilege(@Param("accountId") Long accountId,
                                      @Param("privilege") Privilege privilege);
 
+    @Query("select count(ap) from AccountPrivilege ap " +
+            "where ap.accountPrivilegeId.privilege = :privilege")
+    long countByPrivilege(@Param("privilege") Privilege privilege);
 }

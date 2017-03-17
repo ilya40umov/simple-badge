@@ -42,4 +42,12 @@ public class AccountPrivilegeRepositoryTest {
         assertThat(accountPrivilegeRepository.doesAccountHavePrivilege(account.getAccountId(),
                 Privilege.CREATE_BADGE)).isTrue();
     }
+
+    @Test
+    public void countByPrivilege_returnsCountOfAccountsWithPrivilege() throws Exception {
+        entityManager.persist(testAccountBuilder().withCreateBadgePrivilege().build());
+
+        assertThat(accountPrivilegeRepository.countByPrivilege(Privilege.CREATE_BADGE))
+                .isEqualTo(1);
+    }
 }
