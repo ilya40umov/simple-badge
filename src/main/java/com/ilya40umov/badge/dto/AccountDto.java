@@ -18,7 +18,7 @@ public class AccountDto {
     private String lastName;
     private Instant created;
     private Instant modified;
-    private Boolean canCreateBadges;
+    private List<Integer> privilegeIds;
     private List<AccountBadgeDto> accountBadges;
 
     @JsonView(Views.Public.class)
@@ -82,12 +82,12 @@ public class AccountDto {
     }
 
     @JsonView(Views.Private.class)
-    public Boolean getCanCreateBadges() {
-        return canCreateBadges;
+    public List<Integer> getPrivilegeIds() {
+        return privilegeIds;
     }
 
-    public AccountDto setCanCreateBadges(Boolean canCreateBadges) {
-        this.canCreateBadges = canCreateBadges;
+    public AccountDto setPrivilegeIds(List<Integer> privilegeIds) {
+        this.privilegeIds = privilegeIds;
         return this;
     }
 
@@ -110,7 +110,7 @@ public class AccountDto {
                 ", lastName='" + lastName + '\'' +
                 ", created=" + created +
                 ", modified=" + modified +
-                ", canCreateBadges=" + canCreateBadges +
+                ", privilegeIds=" + privilegeIds +
                 ", accountBadges=" + accountBadges +
                 '}';
     }

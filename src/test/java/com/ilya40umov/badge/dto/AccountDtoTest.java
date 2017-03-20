@@ -1,5 +1,6 @@
 package com.ilya40umov.badge.dto;
 
+import com.ilya40umov.badge.entity.Privilege;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,8 @@ public class AccountDtoTest {
 
         JsonContent<AccountDto> serialized = jacksonTester.write(new AccountDto().setAccountId(1L)
                 .setEmail("email").setFirstName("fname").setLastName("lname")
-                .setCreated(Instant.EPOCH).setModified(Instant.EPOCH).setCanCreateBadges(true)
+                .setCreated(Instant.EPOCH).setModified(Instant.EPOCH)
+                .setPrivilegeIds(Collections.singletonList(Privilege.ADMINISTER.getPrivilegeId()))
                 .setAccountBadges(Collections.singletonList(new AccountBadgeDto()
                         .setBadge(new BadgeDto().setBadgeId(1L).setOwnerId(123L))
                         .setComment("comment"))));
@@ -41,6 +43,7 @@ public class AccountDtoTest {
         assertThat(serialized).extractingJsonPathStringValue("@.lastName").isEqualTo("lname");
         assertThat(serialized).doesNotHaveJsonPathValue("@.created");
         assertThat(serialized).doesNotHaveJsonPathValue("@.modified");
+        assertThat(serialized).doesNotHaveJsonPathValue("@.privilegeIds");
         assertThat(serialized).extractingJsonPathStringValue("@.accountBadges[0].comment")
                 .isEqualTo("comment");
         assertThat(serialized)
@@ -56,7 +59,8 @@ public class AccountDtoTest {
 
         JsonContent<AccountDto> serialized = jacksonTester.write(new AccountDto().setAccountId(1L)
                 .setEmail("email").setFirstName("fname").setLastName("lname")
-                .setCreated(Instant.EPOCH).setModified(Instant.EPOCH).setCanCreateBadges(true)
+                .setCreated(Instant.EPOCH).setModified(Instant.EPOCH)
+                .setPrivilegeIds(Collections.singletonList(Privilege.ADMINISTER.getPrivilegeId()))
                 .setAccountBadges(Collections.singletonList(new AccountBadgeDto()
                         .setBadge(new BadgeDto().setBadgeId(1L).setOwnerId(123L))
                         .setComment("comment"))));
@@ -69,6 +73,8 @@ public class AccountDtoTest {
                 .isEqualTo(Instant.EPOCH.toString());
         assertThat(serialized).extractingJsonPathStringValue("@.modified")
                 .isEqualTo(Instant.EPOCH.toString());
+        assertThat(serialized).hasJsonPathArrayValue("@.privilegeIds",
+                Privilege.ADMINISTER.getPrivilegeId());
         assertThat(serialized).extractingJsonPathStringValue("@.accountBadges[0].comment")
                 .isEqualTo("comment");
         assertThat(serialized)
