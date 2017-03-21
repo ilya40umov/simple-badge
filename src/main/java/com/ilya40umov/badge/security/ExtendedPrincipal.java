@@ -17,7 +17,7 @@ public class ExtendedPrincipal extends User {
 
     private Long accountId;
 
-    static ExtendedPrincipal fromAccount(Account account) {
+    public static ExtendedPrincipal fromAccount(Account account) {
         List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(
                 account.getAccountPrivileges().stream()
                         .map(ap -> ap.getAccountPrivilegeId().getPrivilege().getAuthorityName())
