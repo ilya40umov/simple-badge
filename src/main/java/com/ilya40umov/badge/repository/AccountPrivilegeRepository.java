@@ -6,12 +6,15 @@ import com.ilya40umov.badge.entity.Privilege;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * DAO for {@link AccountPrivilege} entity.
  *
  * @author isorokoumov
  */
+@Transactional(propagation = Propagation.MANDATORY)
 public interface AccountPrivilegeRepository
         extends JpaRepository<AccountPrivilege, AccountPrivilegeId> {
 

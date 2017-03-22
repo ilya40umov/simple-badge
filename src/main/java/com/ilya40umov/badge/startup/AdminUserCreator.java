@@ -9,6 +9,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Ensures that at least one admin user is present in the database(useful for the first-time boot).
@@ -33,6 +34,7 @@ public class AdminUserCreator implements ApplicationRunner {
     }
 
     @Override
+    @Transactional
     public void run(ApplicationArguments args) throws Exception {
         long countOfAdmins = accountPrivilegeRepository.countByPrivilege(Privilege.ADMINISTER);
         if (countOfAdmins == 0) {
