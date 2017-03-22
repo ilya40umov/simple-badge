@@ -4,6 +4,7 @@ import com.ilya40umov.badge.entity.Privilege;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.util.Optional;
 
 /**
  * Converts {@link Privilege} to {@link Integer} and vice versa, thus allowing to store a custom int
@@ -21,6 +22,10 @@ public class PrivilegeAttributeConverter implements AttributeConverter<Privilege
 
     @Override
     public Privilege convertToEntityAttribute(Integer dbData) {
-        return dbData != null ? Privilege.fromId(dbData) : null;
+        if (dbData == null) {
+            return null;
+        }
+        return Privilege.fromId(dbData).orElseThrow(
+                () -> new EnumConstantNotPresentException(Privilege.class, String.valueOf(dbData)));
     }
 }

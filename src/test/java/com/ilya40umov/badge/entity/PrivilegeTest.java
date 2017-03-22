@@ -4,8 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.assertj.core.api.Java6Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author isorokoumov
@@ -14,14 +13,13 @@ import static org.assertj.core.api.Java6Assertions.assertThatThrownBy;
 public class PrivilegeTest {
 
     @Test
-    public void fromId_looksUpPrivilegeById() throws Exception {
+    public void fromId_returnsOptionalWithPrivilege_forKnownId() throws Exception {
         assertThat(Privilege.fromId(Privilege.ADMINISTER.getPrivilegeId()))
-                .isEqualTo(Privilege.ADMINISTER);
+                .hasValue(Privilege.ADMINISTER);
     }
 
     @Test
-    public void fromId_throwsExceptionOnUnknownId() throws Exception {
-        assertThatThrownBy(() -> Privilege.fromId(1234567))
-                .isInstanceOf(EnumConstantNotPresentException.class);
+    public void fromId_returnsEmptyOptional_forUnknownId() throws Exception {
+        assertThat(Privilege.fromId(1234567)).isEmpty();
     }
 }

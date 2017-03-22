@@ -1,5 +1,7 @@
 package com.ilya40umov.badge.entity;
 
+import java.util.Optional;
+
 /**
  * Represents a permission for a user to execute certain types of operations.
  *
@@ -16,13 +18,13 @@ public enum Privilege {
      */
     ADMINISTER(999, "ROLE_ADMIN");
 
-    public static Privilege fromId(Integer privilegeId) {
+    public static Optional<Privilege> fromId(Integer privilegeId) {
         for (Privilege privilege : Privilege.values()) {
             if (privilege.getPrivilegeId().equals(privilegeId)) {
-                return privilege;
+                return Optional.of(privilege);
             }
         }
-        throw new EnumConstantNotPresentException(Privilege.class, "privilegeId:" + privilegeId);
+        return Optional.empty();
     }
 
     private final Integer privilegeId;
