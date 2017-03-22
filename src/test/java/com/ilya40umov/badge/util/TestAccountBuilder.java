@@ -55,6 +55,13 @@ public class TestAccountBuilder {
         return this;
     }
 
+    public TestAccountBuilder withAllPrivileges() {
+        Arrays.stream(Privilege.values())
+                .map(AccountPrivilege::fromPrivilege)
+                .forEach(accountPrivileges::add);
+        return this;
+    }
+
     public TestAccountBuilder withCreateBadgePrivilege() {
         accountPrivileges.add(AccountPrivilege.fromPrivilege(Privilege.CREATE_BADGE));
         return this;

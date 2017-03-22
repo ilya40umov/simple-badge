@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.Instant;
@@ -62,6 +64,53 @@ public class AccountRepositoryTest {
     }
 
     @Test
+    public void save_removesOrphanedPrivilegesOfAccount() {
+        Account account = accountRepository.save(testAccountBuilder().withAllPrivileges().build());
+        entityManager.flush();
+        account.removeAccountPrivilege(account.getAccountPrivileges().iterator().next());
+        entityManager.merge(account);
+        entityManager.flush();
+
+        assertThat(entityManager.getEntityManager()
+                .createQuery("select ap from AccountPrivilege ap").getResultList())
+                .hasSize(1);
+    }
+
+    @Test
+    public void findByIdWithPrivileges_loadsPrivileges() throws Exception {
+        Account account = entityManager.persist(testAccountBuilder()
+                .withCreateBadgePrivilege().build());
+        entityManager.flush();
+        entityManager.clear();
+
+        Optional<Account> foundAccount = accountRepository
+                .findByIdWithPrivileges(account.getAccountId());
+
+        assertThat(foundAccount).isNotEmpty();
+        assertThat(foundAccount).hasValueSatisfying(
+                a -> assertThat(a.getAccountPrivileges()).hasSize(1));
+    }
+
+    @Test
+    public void findByIdWithAllJoins_loadsAllJoins() throws Exception {
+        Account account = entityManager.persist(testAccountBuilder()
+                .withCreateBadgePrivilege().build());
+        Badge badge = entityManager.persist(testBadgeBuilder().withOwner(account).build());
+        entityManager.persist(new AccountBadge().setAccount(account).setBadge(badge));
+        entityManager.flush();
+        entityManager.clear();
+
+        Optional<Account> foundAccount = accountRepository
+                .findByIdWithAllJoins(account.getAccountId());
+
+        assertThat(foundAccount).isNotEmpty();
+        assertThat(foundAccount).hasValueSatisfying(a -> {
+            assertThat(a.getAccountPrivileges()).hasSize(1);
+            assertThat(a.getAccountBadges()).hasSize(1);
+        });
+    }
+
+    @Test
     public void findByEmail_doesNotLoadLazyFields() throws Exception {
         Account account = entityManager.persist(testAccountBuilder()
                 .withCreateBadgePrivilege().build());
@@ -70,7 +119,8 @@ public class AccountRepositoryTest {
         Optional<Account> foundAccount = accountRepository.findByEmail(account.getEmail());
 
         assertThat(foundAccount).isNotEmpty();
-        assertThat(foundAccount.get().getAccountPrivileges()).isEmpty();
+        assertThat(foundAccount).hasValueSatisfying(
+                a -> assertThat(a.getAccountPrivileges()).isEmpty());
     }
 
     @Test
@@ -84,7 +134,8 @@ public class AccountRepositoryTest {
                 .findByEmailWithPrivileges(account.getEmail());
 
         assertThat(foundAccount).isNotEmpty();
-        assertThat(foundAccount.get().getAccountPrivileges()).hasSize(1);
+        assertThat(foundAccount).hasValueSatisfying(
+                a -> assertThat(a.getAccountPrivileges()).hasSize(1));
     }
 
     @Test
@@ -100,8 +151,32 @@ public class AccountRepositoryTest {
                 .findByEmailWithAllJoins(account.getEmail());
 
         assertThat(foundAccount).isNotEmpty();
-        assertThat(foundAccount.get().getAccountPrivileges()).hasSize(1);
-        assertThat(foundAccount.get().getAccountBadges()).hasSize(1);
+        assertThat(foundAccount).hasValueSatisfying(a -> {
+            assertThat(a.getAccountPrivileges()).hasSize(1);
+            assertThat(a.getAccountBadges()).hasSize(1);
+        });
+    }
+
+    @Test
+    public void listWithBadgeId_doesXYZ() throws Exception {
+        Account badgeOwner = entityManager.persist(testAccountBuilder()
+                .withCreateBadgePrivilege().build());
+        Badge badge1 = entityManager.persist(testBadgeBuilder()
+                .withTitle("Badge1").withOwner(badgeOwner).build());
+        Badge badge2 = entityManager.persist(testBadgeBuilder()
+                .withTitle("Badge2").withOwner(badgeOwner).build());
+        Account account1 = entityManager.persist(testAccountBuilder().withEmail("a1@gmail.com")
+                .withAllPrivileges().build());
+        Account account2 = entityManager.persist(testAccountBuilder().withEmail("a2@gmail.com")
+                .withAllPrivileges().build());
+        entityManager.persist(new AccountBadge().setAccount(account1).setBadge(badge1));
+        entityManager.persist(new AccountBadge().setAccount(account1).setBadge(badge2));
+        entityManager.persist(new AccountBadge().setAccount(account2).setBadge(badge1));
+
+        Page<Account> accounts = accountRepository.listWithBadgeId(badge1.getBadgeId(),
+                new PageRequest(0, 50));
+
+        assertThat(accounts).hasSize(2);
     }
 
 }
