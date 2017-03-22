@@ -29,7 +29,6 @@ public class AccountMapperTest {
     private static final String FIRST_NAME = "F.N.";
     private static final String LAST_NAME = "L.N.";
 
-
     @Autowired
     private AccountMapper mapper;
 
