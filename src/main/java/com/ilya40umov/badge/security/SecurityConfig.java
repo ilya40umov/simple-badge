@@ -36,7 +36,7 @@ public class SecurityConfig {
             if (StringUtils.isEmpty(username)) {
                 throw new UsernameNotFoundException("Username must be provided to authenticate.");
             }
-            Optional<Account> maybeAccount = accountRepository.findByEmail(username);
+            Optional<Account> maybeAccount = accountRepository.findByEmailWithPrivileges(username);
             Account account = maybeAccount.orElseThrow(() ->
                     new UsernameNotFoundException("Account not found: " + username));
             return ExtendedPrincipal.fromAccount(account);
