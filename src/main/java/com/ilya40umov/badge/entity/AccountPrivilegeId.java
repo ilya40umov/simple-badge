@@ -46,9 +46,8 @@ public class AccountPrivilegeId implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = getPrivilege() != null ? getPrivilege().hashCode() : 0;
-        result = 31 * result + (getAccountId() != null ? getAccountId().hashCode() : 0);
-        return result;
+        // not using accountId for hasCode() because it only gets assigned after persist()
+        return getPrivilege() != null ? getPrivilege().hashCode() : 0;
     }
 
     @Override

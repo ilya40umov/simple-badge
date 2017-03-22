@@ -114,7 +114,7 @@ public class Account {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", orphanRemoval = true,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+            cascade = {/*CascadeType.PERSIST, CascadeType.MERGE, */CascadeType.ALL})
     public Set<AccountPrivilege> getAccountPrivileges() {
         return accountPrivileges;
     }
@@ -127,6 +127,12 @@ public class Account {
     public Account addAccountPrivilege(AccountPrivilege accountPrivilege) {
         accountPrivilege.setAccount(this);
         getAccountPrivileges().add(accountPrivilege);
+        return this;
+    }
+
+    public Account removeAccountPrivilege(AccountPrivilege accountPrivilege) {
+        getAccountPrivileges().remove(accountPrivilege);
+        accountPrivilege.setAccount(null);
         return this;
     }
 
