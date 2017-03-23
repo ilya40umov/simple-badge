@@ -1,9 +1,9 @@
 # simple-badge
 A very simple implementation of a badge service. 
-The key functionality is operations with account(e.g. sign up), 
+The key functionality is operations with account(e.g. sign up, granting privileges), 
 creating/modifying badges(by authorized users), and
-giving badges to users.
-The project is mean to showcase how to develop a normal web
+giving badges to users(as well as taking them away).
+The project is mean to showcase how to develop a modern, DB-centric, REST-based web
 application with Spring.
 
 ## Technologies
