@@ -158,7 +158,7 @@ public class AccountRepositoryTest {
     }
 
     @Test
-    public void listWithBadgeId_doesXYZ() throws Exception {
+    public void listWithBadgeId_returnsAccountsThatHaveBadge() throws Exception {
         Account badgeOwner = entityManager.persist(testAccountBuilder()
                 .withCreateBadgePrivilege().build());
         Badge badge1 = entityManager.persist(testBadgeBuilder()
