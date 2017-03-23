@@ -44,6 +44,11 @@ public class TestAccountBuilder {
         return this;
     }
 
+    public TestAccountBuilder withPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
     public TestAccountBuilder withEmptyCreatedAndModified() {
         this.created = null;
         this.modified = null;
