@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
  * @author isorokoumov
  */
 @RunWith(MockitoJUnitRunner.class)
-public class UserDetailsServiceTest {
+public class UserDetailsServiceImplTest {
 
     private static final String EMAIL = "email";
 
@@ -34,7 +34,7 @@ public class UserDetailsServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        userDetailsService = SecurityConfig.userDetailsService(accountRepository);
+        userDetailsService = new UserDetailsServiceImpl(accountRepository);
     }
 
     @Test

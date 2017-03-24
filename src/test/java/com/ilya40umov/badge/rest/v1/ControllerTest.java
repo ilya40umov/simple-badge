@@ -55,7 +55,7 @@ public @interface ControllerTest {
     @EnableWebSecurity
     @EnableSpringDataWebSupport
     @EnableGlobalMethodSecurity(prePostEnabled = true)
-    @ComponentScan()
+    @ComponentScan("com.ilya40umov.badge.rest.v1")
     class Config extends WebSecurityConfigurerAdapter {
 
         @Override
