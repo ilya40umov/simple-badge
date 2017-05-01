@@ -10,9 +10,14 @@ application with Spring.
 
 This project is implemented using Spring Boot and specifically the following stack:
 1. **JPA / Hibernate** (for accessing DB)
-2. **Spring Data** (for Repositories / DAO)
-3. **Spring MVC** (for REST controllers)
-4. **Spring Security** (for authentication and access control)
-5. **MySQL** as a target DB and **H2** as a test DB
-6. **MapStruct** as a mapper between entities and DTOs
-7. **Thymeleaf** (a template engine for rendering HTML)
+1. **Spring Data** (for Repositories / DAO)
+1. **Spring MVC** (for REST controllers)
+1. **Spring Security** (for authentication and access control)
+1. **MySQL** as a target DB and **H2** as a test DB
+1. **MapStruct** as a mapper between entities and DTOs
+1. **Thymeleaf** (a template engine for rendering HTML)
+
+## TODOs
+1. Move to Gradle
+1. Use docker-compose and linking to run mysql in a separate container
+1. Add set-up / run instructions
